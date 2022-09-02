@@ -116,5 +116,4 @@ Shader "Unlit/SpritsRender"
             ENDHLSL
         }
     }
-    CustomEditor "Editor.TextureAnimationEditor"
 }
