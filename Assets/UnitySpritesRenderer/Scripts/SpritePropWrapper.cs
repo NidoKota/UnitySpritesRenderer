@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnitySpritesRenderer;
 
-public class SpritePropWrapper : MonoBehaviour
+namespace UnitySpritesRenderer
 {
-    [SerializeField] private SpriteProp _spriteProp = SpriteProp.None;
-    public SpriteProp SpriteProp => _spriteProp;
+    public class SpritePropWrapper : MonoBehaviour
+    {
+        [SerializeField] private SpriteProp _spriteProp = SpriteProp.None;
+        public SpriteProp SpriteProp => _spriteProp;
+    }
 }
