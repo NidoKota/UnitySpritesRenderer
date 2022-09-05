@@ -14,6 +14,14 @@ https://user-images.githubusercontent.com/36328961/188193514-9abb0d6f-43d6-4256-
 
 もちろんアニメーションも可能です<br>
 
+# 利点
+<img width="400" alt="" src="https://user-images.githubusercontent.com/36328961/188423478-27b36606-adad-4527-a49f-a6934bb47711.png"><br>
+一般的に使われるTileとOffsetのみで表情を変える実装の場合、上のようなテクスチャが必要になります<br>
+この場合、各表情の画像が小さくなる問題や、片目を変更するだけで新しい表情の登録が必要になる問題があります<br><br>
+<img width="400" alt="" src="https://user-images.githubusercontent.com/36328961/188423765-cbd84df8-e4bf-4c13-a09d-de25bd3caef0.png"><br>
+UnitySpritesRendererを用いると、パーツの画像の大きさはそのままに、<br>
+片目だけ動かしたり、眉を上下に移動させることができるようになります<br>
+
 # ツール
 <img width="500" alt="" src="https://user-images.githubusercontent.com/36328961/188251650-87a07fba-1e38-4d9b-829c-b752153621b9.png"><br>
 スプライトを変形させられるツールを備えています<br>
