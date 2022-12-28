@@ -64,6 +64,8 @@ Shader "Unlit/SpritsRender"
             float _SpriteAlphas[MAX_COUNT];
             int _SpriteCount;
 
+            void render_sprite(inout half4 srcOneMinusSrcBlend, inout int isFrontAlphaNotZeroFirst, float2 position, uvTransform tra, float2 uv, float alpha);
+
             v2f vert(appdata_t v)
             {
                 v2f OUT;
@@ -80,7 +82,7 @@ Shader "Unlit/SpritsRender"
             {
                 IN.texcoord -= 0.5f;
                 
-                half4 srcOneMinusSrcBlend = (half4)0;
+                half4 blend = (half4)0;
                 int isFrontAlphaNotZeroFirst = 1;
                 
                 for (int i = 0; i < _SpriteCount; i++)
@@ -91,28 +93,32 @@ Shader "Unlit/SpritsRender"
                     const float2 currentSpriteTile = _SpriteTiles[i].xy;
                     const float2 currentSpriteOffset = _SpriteOffsets[i].xy;
                     const float currentSpriteAlpha = _SpriteAlphas[i];
-                    
-                    const uvTransform tra = {currentSpritePosition, currentSpriteRotation, currentSpriteScale};
-                    const float2 uv = getInTransformUV(tra, IN.texcoord) * currentSpriteTile + currentSpriteOffset;
+                    const uvTransform currentTransform = {currentSpritePosition, currentSpriteRotation, currentSpriteScale};
+                    const float2 currentUV = getInTransformUV(currentTransform, IN.texcoord) * currentSpriteTile + currentSpriteOffset;
 
-                    const float4 sample = tex2D(_MainTex, uv) * float4(1, 1, 1, clamp(currentSpriteAlpha, 0, 1)) * isInTransform(tra, IN.texcoord);
-                    
-                    const float3 backColor = srcOneMinusSrcBlend.rgb;
-                    const float3 frontColor = sample.rgb;
-                    const float backAlpha = srcOneMinusSrcBlend.a;
-                    const float frontAlpha = sample.a;
-                    
-                    const float4 blend = float4(frontColor * frontAlpha + backColor * (1.f - frontAlpha), frontAlpha + backAlpha * (1.f - frontAlpha));
-                    
-                    const int isFrontAlphaNotZero = frontAlpha != 0;
-                    
-                    srcOneMinusSrcBlend = sample * isFrontAlphaNotZeroFirst + blend * (1 - isFrontAlphaNotZeroFirst);
-                    isFrontAlphaNotZeroFirst *= (1 - isFrontAlphaNotZero);
+                    render_sprite(blend, isFrontAlphaNotZeroFirst, IN.texcoord, currentTransform, currentUV, currentSpriteAlpha);
                 }
 
-                return srcOneMinusSrcBlend;
+                return blend;
             }
+            
+            void render_sprite(inout half4 srcOneMinusSrcBlend, inout int isFrontAlphaNotZeroFirst, float2 position, uvTransform transform, float2 uv, float alpha)
+            {
+                const float4 sample = tex2D(_MainTex, uv) * float4(1, 1, 1, clamp(alpha, 0, 1)) * isInTransform(transform, position);
 
+                const float3 backColor = srcOneMinusSrcBlend.rgb;
+                const float3 frontColor = sample.rgb;
+                const float backAlpha = srcOneMinusSrcBlend.a;
+                const float frontAlpha = sample.a;
+
+                const float4 blend = float4(frontColor * frontAlpha + backColor * (1.f - frontAlpha), frontAlpha + backAlpha * (1.f - frontAlpha));
+
+                const int isFrontAlphaNotZero = frontAlpha != 0;
+
+                srcOneMinusSrcBlend = sample * isFrontAlphaNotZeroFirst + blend * (1 - isFrontAlphaNotZeroFirst);
+                isFrontAlphaNotZeroFirst *= (1 - isFrontAlphaNotZero);
+            }
+            
             ENDHLSL
         }
     }

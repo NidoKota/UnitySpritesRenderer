@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace UnitySpritesRenderer.Editor
+namespace SpritesRenderer.Scripts.Editor
 {
     public static class SerializedWrapperExtensionMethods
     {

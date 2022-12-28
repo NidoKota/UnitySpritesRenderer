@@ -1,11 +1,11 @@
 ﻿using UnityEditor;
 
-namespace UnitySpritesRenderer.Editor
+namespace SpritesRenderer.Scripts.Editor
 {
-    public struct SerializedWrapper
+    public readonly struct SerializedWrapper
     {
-        private SerializedObject _serializedObject;
-        private SerializedProperty _serializedProperty;
+        private readonly SerializedObject _serializedObject;
+        private readonly SerializedProperty _serializedProperty;
         
         public SerializedWrapper(SerializedObject serializedObject)
         {

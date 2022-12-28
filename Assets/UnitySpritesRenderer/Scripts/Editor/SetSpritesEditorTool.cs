@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
-namespace UnitySpritesRenderer.Editor
+namespace SpritesRenderer.Scripts.Editor
 {
     public class SetSpritesEditorTool : EditorTool
     {

@@ -6,17 +6,17 @@ using UnityEditor.Graphs;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace UnitySpritesRenderer.Editor
+namespace SpritesRenderer.Scripts.Editor
 {
-    public class SpritePropsReorderableList
+    public class SpritePropsReorderableListWrapper
     {
         private readonly SerializedObject _serializedObject;
         private readonly SerializedProperty _spritePropWrappersProp;
         private readonly ReorderableList _spritePropReorderableList;
         private readonly Transform _toolParentTransform;
-        private const string _listName = "SpritePropsList";
+        private const string ListName = "SpritePropsList";
 
-        public SpritePropsReorderableList(SerializedObject serializedObject, SerializedProperty spritePropWrappersProp, Transform toolParentTransform)
+        public SpritePropsReorderableListWrapper(SerializedObject serializedObject, SerializedProperty spritePropWrappersProp, Transform toolParentTransform)
         {
             _serializedObject = serializedObject;
             _spritePropWrappersProp = spritePropWrappersProp;
@@ -27,7 +27,7 @@ namespace UnitySpritesRenderer.Editor
         public void Draw()
         {
             if (_spritePropWrappersProp.isExpanded) _spritePropReorderableList.DoLayoutList();
-            else _spritePropWrappersProp.isExpanded = EditorGUILayout.Foldout(_spritePropWrappersProp.isExpanded, _listName, true);
+            else _spritePropWrappersProp.isExpanded = EditorGUILayout.Foldout(_spritePropWrappersProp.isExpanded, ListName, true);
         }
 
         private ReorderableList GetSpritePropReorderableList()
@@ -36,7 +36,7 @@ namespace UnitySpritesRenderer.Editor
 
             rl.onAddCallback = OnAdd;
             rl.drawHeaderCallback = DrawHeader;
-            rl.elementHeightCallback = ElementHeight;
+            rl.elementHeightCallback = GetElementHeight;
             rl.drawElementCallback = DrawElement;
         
             return rl;
@@ -50,10 +50,10 @@ namespace UnitySpritesRenderer.Editor
         private void DrawHeader(Rect rect)
         {
             rect = new Rect(rect) { xMin = rect.xMin - 8, xMax = rect.xMax - 50 };
-            _spritePropWrappersProp.isExpanded = EditorGUI.Foldout(rect, _spritePropWrappersProp.isExpanded, _listName, true);
+            _spritePropWrappersProp.isExpanded = EditorGUI.Foldout(rect, _spritePropWrappersProp.isExpanded, ListName, true);
         }
     
-        private float ElementHeight(int index)
+        private float GetElementHeight(int index)
         {
             SerializedProperty currentProp = _spritePropWrappersProp.GetArrayElementAtIndex(index);
             if (!currentProp.objectReferenceValue || !currentProp.isExpanded) return EditorGUIUtility.singleLineHeight;

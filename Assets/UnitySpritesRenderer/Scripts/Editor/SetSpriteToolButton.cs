@@ -2,7 +2,7 @@
 using UnityEditor.EditorTools;
 using UnityEngine;
 
-namespace UnitySpritesRenderer.Editor
+namespace SpritesRenderer.Scripts.Editor
 {
     public static class SetSpriteToolButton
     {

@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using SpritesRenderer.Scripts;
 using UnityEngine;
 
-namespace UnitySpritesRenderer
+namespace SpritesRenderer.Scripts
 {
     [ExecuteInEditMode]
     public class SetSprites : MonoBehaviour

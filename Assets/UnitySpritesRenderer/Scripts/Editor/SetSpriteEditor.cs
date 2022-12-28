@@ -1,12 +1,12 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace UnitySpritesRenderer.Editor
+namespace SpritesRenderer.Scripts.Editor
 {
     [CustomEditor(typeof(SetSprites))]
     public class SetSpritesEditor : UnityEditor.Editor
     {
-        private SpritePropsReorderableList _spritePropsReorderableList;
+        private SpritePropsReorderableListWrapper _spritePropsReorderableListWrapper;
         private SerializedProperty _spritePropWrappersProp;
         private SerializedProperty _targetMaterialProp;
         private SetSprites _targetSetSprites;
@@ -50,7 +50,7 @@ namespace UnitySpritesRenderer.Editor
             _spritePropWrappersProp = serializedObject.FindProperty("_spritePropWrappers");
             _targetMaterialProp = serializedObject.FindProperty("_targetMaterial");
             _targetSetSprites = target as SetSprites;
-            _spritePropsReorderableList = new SpritePropsReorderableList(serializedObject, _spritePropWrappersProp, _targetSetSprites.transform);
+            _spritePropsReorderableListWrapper = new SpritePropsReorderableListWrapper(serializedObject, _spritePropWrappersProp, _targetSetSprites.transform);
         }
 
         public override void OnInspectorGUI()
@@ -59,7 +59,7 @@ namespace UnitySpritesRenderer.Editor
 
             EditorGUILayout.PropertyField(_targetMaterialProp);
             EditorGUILayout.Space(EditorGUIUtility.singleLineHeight);
-            _spritePropsReorderableList.Draw();
+            _spritePropsReorderableListWrapper.Draw();
 
             serializedObject.ApplyModifiedProperties();
         }

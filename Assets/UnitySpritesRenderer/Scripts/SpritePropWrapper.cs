@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnitySpritesRenderer;
+using SpritesRenderer.Scripts;
 
-namespace UnitySpritesRenderer
+namespace SpritesRenderer.Scripts
 {
     public class SpritePropWrapper : MonoBehaviour
     {
